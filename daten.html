@@ -1,1 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamische Daten</title>
 
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      color: darkblue;
+    }
+
+    h2 {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Dynamische-Datenseite</h1>
+
+  <h2>Linzer Stadtteile</h2>
+
+  <ul id="liste-linz"></ul>
+
+  <h2>Service-Daten</h2>
+
+  <ul id="service-liste"></ul>
+
+  <script>
+    // Lokale Daten
+    const stadtteile = [
+      "Urfahr",
+      "Innere Stadt",
+      "Bindermichel",
+      "DEIN NAME",
+      "NAME DEINER MUTTER"
+    ];
+
+    const liste = document.getElementById("liste-linz");
+
+    stadtteile.forEach(s => {
+      let li = document.createElement("li");
+      li.textContent = s;
+      liste.appendChild(li);
+    });
+
+    // Daten vom Server laden (Servicecall)
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(response => response.json())
+      .then(data => {
+
+        const sListe = document.getElementById("service-liste");
+
+        data.forEach(user => {
+          let li = document.createElement("li");
+          li.textContent = "User: " + user.name;
+          sListe.appendChild(li);
+        });
+
+      });
+  </script>
+
+</body>
+</html>
